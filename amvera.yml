@@ -6,6 +6,5 @@ meta:
 
 run:
   buildFileName: publish/OtpravkaApi
-  containerPort: "8080"
+  containerPort: "80"
   persistenceMount: /data
-
