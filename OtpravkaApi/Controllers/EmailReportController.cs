@@ -3,96 +3,60 @@ using OtpravkaApi.Models;
 
 namespace OtpravkaApi.Controllers
 {
+    // Помечаем класс как API-контроллер
     [ApiController]
+
+    // Базовый маршрут: api/EmailReport
     [Route("api/[controller]")]
     public class EmailReportController : ControllerBase
     {
-        private static readonly List<EmailReport> reports = new();
-        private static int nextId = 1;
+        // Временное хранилище данных (в памяти приложения)
+        // Используется для учебного проекта
+        private static List<EmailReport> reports = new();
 
-        // GET /api/EmailReport
+        // GET: api/EmailReport
+        // Возвращает список всех отчетов
         [HttpGet]
-        public ActionResult<IEnumerable<EmailReport>> GetAll()
+        public IEnumerable<EmailReport> Get()
         {
-            return Ok(reports);
+            return reports;
         }
 
-        // GET /api/EmailReport/{id}
-        [HttpGet("{id:int}")]
-        public ActionResult<EmailReport> GetById(int id)
-        {
-            var report = reports.FirstOrDefault(r => r.Id == id);
-            if (report == null) return NotFound($"Report with id={id} not found");
-            return Ok(report);
-        }
-
-        // GET /api/EmailReport/search?recipient=...&status=...
-        [HttpGet("search")]
-        public ActionResult<IEnumerable<EmailReport>> Search([FromQuery] string? recipient, [FromQuery] string? status)
-        {
-            var query = reports.AsEnumerable();
-
-            if (!string.IsNullOrWhiteSpace(recipient))
-                query = query.Where(r => r.Recipient.Contains(recipient, StringComparison.OrdinalIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(status))
-                query = query.Where(r => r.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
-
-            return Ok(query.ToList());
-        }
-
-        // POST /api/EmailReport
+        // POST: api/EmailReport
+        // Добавляет новый отчет
         [HttpPost]
-        public ActionResult<EmailReport> Create([FromBody] EmailReport report)
+        public IActionResult Post([FromBody] EmailReport report)
         {
-            if (string.IsNullOrWhiteSpace(report.Recipient))
-                return BadRequest("Recipient is required");
+            // Присваиваем простой идентификатор
+            report.Id = reports.Count + 1;
 
-            report.Id = nextId++;
-            report.CreatedAt = DateTime.UtcNow;
-            if (string.IsNullOrWhiteSpace(report.Status))
-                report.Status = "Created";
-
+            // Добавляем отчет в список
             reports.Add(report);
 
-            return CreatedAtAction(nameof(GetById), new { id = report.Id }, report);
-        }
-
-        // PUT /api/EmailReport/{id}
-        [HttpPut("{id:int}")]
-        public ActionResult<EmailReport> Update(int id, [FromBody] EmailReport update)
-        {
-            var report = reports.FirstOrDefault(r => r.Id == id);
-            if (report == null) return NotFound($"Report with id={id} not found");
-
-            // обновляем поля (Id и CreatedAt не трогаем)
-            if (!string.IsNullOrWhiteSpace(update.Recipient)) report.Recipient = update.Recipient;
-            if (!string.IsNullOrWhiteSpace(update.Subject)) report.Subject = update.Subject;
-            if (!string.IsNullOrWhiteSpace(update.Body)) report.Body = update.Body;
-            if (!string.IsNullOrWhiteSpace(update.Status)) report.Status = update.Status;
-
+            // Возвращаем добавленный объект
             return Ok(report);
         }
 
-        // DELETE /api/EmailReport/{id}
-        [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
-        {
-            var report = reports.FirstOrDefault(r => r.Id == id);
-            if (report == null) return NotFound($"Report with id={id} not found");
-
-            reports.Remove(report);
-            return NoContent();
-        }
-
-        // DELETE /api/EmailReport
-        // очистка списка (удобно для лабы)
+        // DELETE: api/EmailReport
+        // Очищает весь список отчетов
         [HttpDelete]
-        public IActionResult Clear()
+        public IActionResult DeleteAll()
         {
             reports.Clear();
-            nextId = 1;
-            return NoContent();
+            return Ok("All reports deleted");
+        }
+
+        // GET: api/EmailReport/search?recipient=test@mail.com
+        // Поиск отчетов по получателю
+        [HttpGet("search")]
+        public IActionResult Search([FromQuery] string recipient)
+        {
+            var result = reports
+                .Where(r => r.Recipient != null &&
+                            r.Recipient.Contains(recipient))
+                .ToList();
+
+            return Ok(result);
         }
     }
 }
