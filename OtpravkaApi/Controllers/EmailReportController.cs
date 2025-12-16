@@ -11,7 +11,6 @@ namespace OtpravkaApi.Controllers
     public class EmailReportController : ControllerBase
     {
         // Временное хранилище данных (в памяти приложения)
-        // Используется для учебного проекта
         private static List<EmailReport> reports = new();
 
         // GET: api/EmailReport
