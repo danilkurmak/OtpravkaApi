@@ -6,11 +6,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger включаем всегда (для Amvera это нормально)
+// Swagger включаем всегда 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// авторизация (пусть будет)
+// авторизация 
 app.UseAuthorization();
 
 app.MapControllers();
