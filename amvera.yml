@@ -6,9 +6,10 @@ meta:
 
 build:
   image: null
-  buildFileName: OtpravkaApi.sln
 
 run:
   image: null
+  buildFileName: OtpravkaApi.sln
   persistenceMount: /data
-  containerPort: 80
+  containerPort: "80"
+  serviceType: compute
