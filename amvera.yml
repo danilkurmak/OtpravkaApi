@@ -4,11 +4,7 @@ meta:
     name: dotnet
     version: "8.0"
 
-build:
-  image: null
-
 run:
-  image: null
-  buildFileName: OtpravkaApi/OtpravkaApi.csproj
-  persistenceMount: /data
+  buildFileName: bin/publish/OtpravkaApi
   containerPort: "80"
+  persistenceMount: /data
