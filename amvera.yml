@@ -9,7 +9,7 @@ build:
 
 run:
   image: null
-  buildFileName: OtpravkaApi.sln
+  buildFileName: OtpravkaApi/OtpravkaApi.csproj
   persistenceMount: /data
   containerPort: "80"
   serviceType: compute
