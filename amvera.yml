@@ -7,6 +7,6 @@ build:
   image: null
 run:
   image: null
-  buildFileName: null
+  buildFileName: OtpravkaApi/OtpravkaApi.csproj
   persistenceMount: /data
   containerPort: "80"
