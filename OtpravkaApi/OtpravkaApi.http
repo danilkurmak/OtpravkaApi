@@ -1,0 +1,6 @@
+@OtpravkaApi_HostAddress = http://localhost:5283
+
+GET {{OtpravkaApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
