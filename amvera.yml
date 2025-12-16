@@ -3,10 +3,12 @@ meta:
   toolchain:
     name: dotnet
     version: "8.0"
+
 build:
   image: null
+  buildFileName: OtpravkaApi.sln
+
 run:
   image: null
-  buildFileName: OtpravkaApi/OtpravkaApi.csproj
   persistenceMount: /data
-  containerPort: "80"
+  containerPort: 80
