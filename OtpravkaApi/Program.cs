@@ -6,15 +6,16 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger включаем всегда
+// ВАЖНО: сначала статика
+app.UseDefaultFiles(); // будет искать index.html в wwwroot
+app.UseStaticFiles();  // отдаёт файлы из wwwroot
+
+// Swagger включаем
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
 app.MapControllers();
-
-// редирект с корня на swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
