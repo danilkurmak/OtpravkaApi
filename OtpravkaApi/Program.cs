@@ -6,15 +6,16 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger включаем всегда
+// Swagger включаем всегда (и локально, и на Amvera)
 app.UseSwagger();
 app.UseSwaggerUI();
+
 
 app.UseHttpsRedirection();
 
 app.MapControllers();
 
-// редирект с корня на swagger
+
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
