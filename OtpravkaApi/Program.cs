@@ -6,11 +6,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ВАЖНО: сначала статика
-app.UseDefaultFiles(); // будет искать index.html в wwwroot
-app.UseStaticFiles();  // отдаёт файлы из wwwroot
 
-// Swagger включаем
+app.UseDefaultFiles(); 
+app.UseStaticFiles();  
+
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
