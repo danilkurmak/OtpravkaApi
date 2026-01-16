@@ -4,12 +4,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 var app = builder.Build();
 
-app.UseStaticFiles();
+// 1) статика (wwwroot)
+app.UseDefaultFiles();   // чтобы "/" открывал index.html
+app.UseStaticFiles();    // чтобы вообще отдавались файлы из wwwroot
 
-// Swagger включаем всегда
+// Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -17,7 +18,7 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 
-// редирект с корня на swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
+// если вдруг / не отдался статикой — пусть хотя бы ведёт на интерфейс
+app.MapGet("/", () => Results.Redirect("/index.html"));
 
 app.Run();
