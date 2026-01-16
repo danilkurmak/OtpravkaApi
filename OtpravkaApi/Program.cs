@@ -18,6 +18,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 // редирект с корня на swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
+app.MapGet("/", () => Results.Redirect("/index.html"));
 
 app.Run();

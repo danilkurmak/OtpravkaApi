@@ -19,10 +19,10 @@
 		<Folder Include="Services\" />
 	</ItemGroup>
 
-	
 	<ItemGroup>
-		<Content Include="wwwroot\**\*" CopyToPublishDirectory="PreserveNewest" />
+		<Content Update="wwwroot\index.html">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
-
 
 </Project>
