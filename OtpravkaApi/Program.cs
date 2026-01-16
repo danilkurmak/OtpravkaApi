@@ -6,12 +6,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger включаем всегда 
+// Swagger включаем всегда
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// авторизация 
-app.UseAuthorization();
+app.UseHttpsRedirection();
 
 app.MapControllers();
 
