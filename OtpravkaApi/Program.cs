@@ -4,7 +4,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
+
+app.UseStaticFiles();
 
 // Swagger включаем всегда
 app.UseSwagger();

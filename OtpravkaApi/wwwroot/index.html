@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>OtpravkaApi — отправка писем</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #0078D4;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Отправка письма</h2>
+
+        <input id="recipient" placeholder="Email получателя" />
+        <input id="subject" placeholder="Тема письма" />
+        <textarea id="body" rows="5" placeholder="Текст письма"></textarea>
+
+        <button onclick="sendEmail()">Отправить</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+    async function sendEmail() {
+        const data = {
+            recipient: document.getElementById("recipient").value,
+            subject: document.getElementById("subject").value,
+            body: document.getElementById("body").value
+        };
+
+        const response = await fetch("/api/EmailReport/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = document.getElementById("result");
+
+        if (response.ok) {
+            result.style.color = "green";
+            result.innerText = "Письмо успешно отправлено";
+        } else {
+            result.style.color = "red";
+            result.innerText = "Ошибка при отправке письма";
+        }
+    }
+    </script>
+
+</body>
+</html>
